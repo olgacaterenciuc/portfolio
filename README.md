@@ -79,7 +79,8 @@ milestone, not a separate release claim for each pillar or confirmation of gener
 availability. Leadership prioritization and recognition are retained from the
 supplied case-study record; no usage metrics or usability-test results are added.
 Feedback now uses two exact excerpts: leadership feedback supplied by the owner
-and Mark McLeish's public LinkedIn post, transcribed from the supplied screenshot.
+and a public LinkedIn post, transcribed from the supplied screenshot, with the
+author's name omitted at the portfolio owner's request.
 The internal speaker is unnamed; no job title or publication date is inferred
 for the public post. The earlier unsourced testimonial wording is not restored.
 The screenshot itself, including phone UI and unrelated personal details, is not
