@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Agent Hub — Olga Caterenciuc</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=DM+Mono:wght@300;400&family=Syne:wght@400;500;700;800&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --ivory: #F5F0E8; --ink: #0F0E0C; --warm-mid: #7A6F63;
+      --accent: #C8533A; --accent-light: #E8C4BB;
+      --surface: #EDEAE2; --border: rgba(15,14,12,0.1);
+      --font-display: 'Cormorant Garamond', serif;
+      --font-ui: 'Syne', sans-serif;
+      --font-mono: 'DM Mono', monospace;
+    }
+    html { scroll-behavior: smooth; }
+    body { background: var(--ivory); color: var(--ink); font-family: var(--font-ui); overflow-x: hidden; cursor: none; }
+    body::before {
+      content: ''; position: fixed; inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.035'/%3E%3C/svg%3E");
+      pointer-events: none; z-index: 100; opacity: 0.6;
+    }
+
+    /* CURSOR */
+    .cursor { position: fixed; width: 10px; height: 10px; background: var(--accent); border-radius: 50%; pointer-events: none; z-index: 9999; transform: translate(-50%,-50%); transition: width .25s, height .25s; mix-blend-mode: multiply; }
+    .cursor-ring { position: fixed; width: 36px; height: 36px; border: 1px solid var(--accent); border-radius: 50%; pointer-events: none; z-index: 9998; transform: translate(-50%,-50%); transition: width .3s, height .3s, opacity .3s; opacity: .5; }
+    body.ch .cursor { width: 20px; height: 20px; }
+    body.ch .cursor-ring { width: 56px; height: 56px; opacity: .25; }
+
+    /* NAV */
+    nav { position: fixed; top: 0; left: 0; right: 0; z-index: 50; display: flex; justify-content: space-between; align-items: center; padding: 28px 60px; }
+    .nav-logo { font-family: var(--font-mono); font-size: 12px; letter-spacing: .12em; color: var(--ink); text-decoration: none; text-transform: uppercase; opacity: .7; }
+    .nav-links { display: flex; gap: 40px; list-style: none; }
+    .nav-links a { font-family: var(--font-mono); font-size: 11px; letter-spacing: .14em; text-transform: uppercase; color: var(--ink); text-decoration: none; opacity: .55; transition: opacity .2s; }
+    .nav-links a:hover { opacity: 1; }
+    .nav-back { display: flex; align-items: center; gap: 10px; font-family: var(--font-mono); font-size: 11px; letter-spacing: .14em; text-transform: uppercase; color: var(--ink); text-decoration: none; opacity: .55; transition: opacity .2s; }
+    .nav-back:hover { opacity: 1; }
+    .nav-back svg { transition: transform .2s; }
+    .nav-back:hover svg { transform: translateX(-4px); }
+
+    /* HERO */
+    .cs-hero { padding: 156px 60px 48px; max-width: 1280px; margin: 0 auto; }
+    .cs-hero-label { font-family: var(--font-mono); font-size: 11px; letter-spacing: .2em; text-transform: uppercase; color: var(--warm-mid); margin-bottom: 24px; opacity: 0; animation: fadeUp .8s ease .2s forwards; }
+    .cs-hero-title { font-family: var(--font-display); font-size: clamp(72px, 9vw, 128px); font-weight: 300; line-height: .95; letter-spacing: -.02em; color: var(--ink); opacity: 0; animation: fadeUp .9s ease .4s forwards; }
+    .cs-hero-title em { font-style: italic; color: var(--accent); }
+    .cs-hero-desc { margin-top: 24px; font-family: var(--font-display); font-size: clamp(20px, 2vw, 26px); font-weight: 300; font-style: italic; color: var(--warm-mid); max-width: 760px; line-height: 1.5; opacity: 0; animation: fadeUp .9s ease .65s forwards; }
+    .cs-hero-meta { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 24px; margin-top: 32px; opacity: 0; animation: fadeUp .8s ease .8s forwards; }
+    .cs-meta-item-label { font-family: var(--font-mono); font-size: 10px; letter-spacing: .2em; text-transform: uppercase; color: var(--warm-mid); margin-bottom: 4px; }
+    .cs-meta-item-value { font-family: var(--font-ui); font-size: 14px; font-weight: 500; color: var(--ink); }
+    .cs-hero-result { margin-top: 28px; max-width: 760px; font-size: 14px; line-height: 1.7; }
+    .cs-note { font-size: 13px; line-height: 1.7; color: var(--warm-mid); }
+    .cs-hero .cs-note { margin-top: 12px; max-width: 760px; }
+
+    /* ARTICLE LAYOUT */
+    .cs-article { padding: 48px 60px 64px; display: grid; grid-template-columns: 180px minmax(0, 1fr); gap: 64px; max-width: 1280px; margin: 0 auto; }
+
+    /* Sticky sidebar */
+    .cs-toc { position: sticky; top: 120px; height: fit-content; }
+    .cs-toc-title { font-family: var(--font-mono); font-size: 10px; letter-spacing: .2em; text-transform: uppercase; color: var(--warm-mid); margin-bottom: 24px; }
+    .cs-toc-list { list-style: none; display: flex; flex-direction: column; gap: 12px; }
+    .cs-toc-list a { font-family: var(--font-mono); font-size: 11px; letter-spacing: .1em; color: var(--warm-mid); text-decoration: none; transition: color .2s; display: flex; align-items: center; gap: 8px; }
+    .cs-toc-list a::before { content: ''; width: 16px; height: 1px; background: var(--border); transition: width .3s, background .2s; }
+    .cs-toc-list a:hover { color: var(--ink); }
+    .cs-toc-list a:hover::before { width: 24px; background: var(--accent); }
+
+    /* Main content */
+    .cs-content { min-width: 0; }
+
+    /* Section headings */
+    .cs-section { margin-bottom: 80px; }
+    .cs-section-header { display: flex; align-items: baseline; gap: 24px; margin-bottom: 40px; padding-bottom: 20px; border-bottom: 1px solid var(--border); }
+    .cs-section-num { font-family: var(--font-mono); font-size: 11px; letter-spacing: .15em; color: var(--warm-mid); }
+    .cs-section-title { font-family: var(--font-display); font-size: clamp(36px, 4vw, 52px); font-weight: 300; letter-spacing: -.01em; color: var(--ink); }
+    .cs-section-title em { font-style: italic; color: var(--accent); }
+    .cs-body-text { font-family: var(--font-display); font-size: 20px; font-weight: 300; line-height: 1.75; color: var(--ink); margin-bottom: 24px; }
+    .cs-body-text:last-child { margin-bottom: 0; }
+
+    /* Pillar cards */
+    .pillars-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px; margin: 48px 0; }
+    .pillar-card { padding: 36px 28px; background: var(--surface); }
+    .pillar-number { font-family: var(--font-mono); font-size: 10px; letter-spacing: .2em; text-transform: uppercase; color: var(--warm-mid); margin-bottom: 16px; }
+    .pillar-name { font-family: var(--font-display); font-size: 36px; font-weight: 300; color: var(--ink); margin-bottom: 12px; }
+    .pillar-name em { font-style: italic; color: var(--accent); }
+    .pillar-desc { font-family: var(--font-ui); font-size: 13px; color: var(--warm-mid); line-height: 1.6; }
+    .pillar-card.active { background: var(--ink); }
+    .pillar-card.active .pillar-number { color: rgba(245,240,232,.35); }
+    .pillar-card.active .pillar-name { color: var(--ivory); }
+    .pillar-card.active .pillar-name em { color: var(--accent-light); }
+    .pillar-card.active .pillar-desc { color: rgba(245,240,232,.55); }
+
+    .design-step { font-family: var(--font-ui); font-size: 18px; font-weight: 500; line-height: 1.5; margin: 40px 0 16px; }
+    .case-screen { margin: 32px 0 48px; }
+    .case-screen > a { display: block; width: fit-content; max-width: 100%; margin: 0 auto; border-radius: 8px; }
+    .case-screen img { display: block; width: auto; max-width: 100%; height: auto; border: 0; border-radius: 8px; box-shadow: 0 16px 40px rgba(15,14,12,.1), 0 3px 10px rgba(15,14,12,.05); }
+    .case-screen figcaption { margin-top: 20px; font-size: 13px; line-height: 1.7; color: var(--warm-mid); }
+    .case-screen figcaption a { color: var(--accent); text-underline-offset: 3px; white-space: nowrap; }
+
+    /* Outcomes */
+    .impact-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 2px; margin: 48px 0; }
+    .impact-item { padding: 36px 32px; background: var(--surface); }
+    .impact-item.highlight { background: var(--ink); }
+    .impact-bullet { font-family: var(--font-mono); font-size: 10px; letter-spacing: .15em; text-transform: uppercase; color: var(--warm-mid); margin-bottom: 12px; }
+    .impact-item.highlight .impact-bullet { color: rgba(245,240,232,.35); }
+    .impact-text { font-family: var(--font-display); font-size: 22px; font-weight: 300; line-height: 1.4; color: var(--ink); }
+    .impact-text strong { font-weight: 400; color: var(--accent); font-style: italic; }
+    .impact-item.highlight .impact-text { color: var(--ivory); }
+    .impact-item.highlight .impact-text strong { color: var(--accent-light); }
+    .project-feedback { margin: 24px 0; padding: 32px; border-left: 2px solid var(--accent); background: var(--surface); }
+    .project-feedback blockquote { font-family: var(--font-display); font-size: clamp(24px, 2.4vw, 32px); font-weight: 300; line-height: 1.5; }
+    .project-feedback figcaption { margin-top: 20px; font-family: var(--font-mono); font-size: 11px; color: var(--warm-mid); line-height: 1.8; }
+
+    /* Reflection */
+    .reflection-block { padding: 56px; background: var(--ink); margin: 80px 0; }
+    .reflection-label { font-family: var(--font-mono); font-size: 10px; letter-spacing: .2em; text-transform: uppercase; color: rgba(245,240,232,.3); margin-bottom: 32px; }
+    .reflection-text { font-family: var(--font-display); font-size: clamp(20px, 2vw, 26px); font-weight: 300; line-height: 1.75; color: rgba(245,240,232,.85); margin-bottom: 24px; }
+    .reflection-text:last-of-type { margin-bottom: 0; }
+
+    /* Next project */
+    .next-project { margin: 0 60px 0; padding: 80px 0; border-top: 1px solid var(--border); }
+    .next-label { font-family: var(--font-mono); font-size: 10px; letter-spacing: .2em; text-transform: uppercase; color: var(--warm-mid); margin-bottom: 32px; }
+    .next-card { display: flex; align-items: center; justify-content: space-between; padding: 48px 56px; background: var(--surface); text-decoration: none; color: var(--ink); transition: background .4s; }
+    .next-card:hover { background: var(--ink); }
+    .next-card-title { font-family: var(--font-display); font-size: clamp(40px, 5vw, 64px); font-weight: 300; letter-spacing: -.02em; transition: color .4s; }
+    .next-card:hover .next-card-title { color: var(--ivory); }
+    .next-card-sub { font-family: var(--font-mono); font-size: 10px; letter-spacing: .15em; text-transform: uppercase; color: var(--warm-mid); margin-top: 8px; transition: color .4s; }
+    .next-card:hover .next-card-sub { color: rgba(245,240,232,.4); }
+    .next-arrow { width: 56px; height: 56px; border: 1px solid var(--border); border-radius: 50%; display: flex; align-items: center; justify-content: center; transition: border-color .4s, background .4s, transform .3s; }
+    .next-card:hover .next-arrow { border-color: var(--accent); background: var(--accent); transform: rotate(-45deg); }
+    .next-arrow svg { stroke: var(--ink); transition: stroke .4s; }
+    .next-card:hover .next-arrow svg { stroke: var(--ivory); }
+
+    /* BUTTONS */
+    .btn-primary { display: inline-flex; align-items: center; gap: 12px; padding: 16px 32px; background: var(--ink); color: var(--ivory); font-family: var(--font-mono); font-size: 11px; letter-spacing: .18em; text-transform: uppercase; text-decoration: none; transition: background .3s; cursor: none; }
+    .btn-primary:hover { background: var(--accent); }
+    .btn-ghost { display: inline-flex; align-items: center; gap: 12px; padding: 16px 32px; border: 1px solid var(--border); color: var(--ink); font-family: var(--font-mono); font-size: 11px; letter-spacing: .18em; text-transform: uppercase; text-decoration: none; transition: border-color .3s, color .3s, background .3s; cursor: none; }
+    .btn-ghost:hover { border-color: var(--ink); background: var(--ink); color: var(--ivory); }
+
+    /* FOOTER */
+    footer { padding: 64px 60px 48px; border-top: 1px solid var(--border); display: flex; justify-content: space-between; align-items: flex-end; }
+    .footer-left { font-family: var(--font-display); font-size: 56px; font-weight: 300; line-height: .9; color: var(--ink); }
+    .footer-left em { font-style: italic; color: var(--accent); }
+    .footer-right { text-align: right; }
+    .footer-copy { font-family: var(--font-mono); font-size: 10px; letter-spacing: .15em; text-transform: uppercase; color: var(--warm-mid); }
+    .footer-cta { display: flex; gap: 16px; margin-bottom: 24px; justify-content: flex-end; }
+
+    /* ANIMATIONS */
+    @keyframes fadeUp { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: translateY(0); } }
+    @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+    .reveal { opacity: 0; transform: translateY(32px); transition: opacity .8s ease, transform .8s ease; }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+
+    @media (max-width: 1024px) {
+      .cs-article { grid-template-columns: 1fr; gap: 32px; padding: 40px; }
+      .cs-toc { display: none; }
+      .pillars-grid { grid-template-columns: 1fr; }
+      .impact-grid { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 768px) {
+      nav { padding: 24px 32px; } .nav-links { display: none; }
+      .cs-hero { padding: 156px 24px 32px; }
+      .cs-hero-meta { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .cs-article { padding: 32px 24px; }
+      .cs-section-header { gap: 16px; margin-bottom: 24px; }
+      .pillar-card, .impact-item { padding: 28px 24px; }
+      .next-project { margin: 0 32px; }
+      .next-card { padding: 40px 32px; }
+      footer { flex-direction: column; gap: 32px; align-items: flex-start; padding: 48px 32px 40px; }
+      .footer-left { font-size: 40px; }
+      .footer-cta { justify-content: flex-start; }
+      .reflection-block { padding: 40px 32px; }
+    }
+  </style>
+  <link rel="stylesheet" href="prototype.css" />
+</head>
+<body>
+  <div class="cursor" id="cursor"></div>
+  <div class="cursor-ring" id="cursorRing"></div>
+
+  <nav aria-label="Main navigation">
+    <a href="index.html#projects" class="nav-back">
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5">
+        <path d="M13 8H3M3 8L8 3M3 8L8 13"/>
+      </svg>
+      All work
+    </a>
+    <ul class="nav-links">
+      <li><a href="index.html#projects">Work</a></li>
+      <li><a href="index.html#about">About</a></li>
+      <li><a href="https://www.linkedin.com/in/olga-caterenciuc-95aa991a5/" target="_blank" rel="noopener noreferrer">LinkedIn</a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO -->
+  <section class="cs-hero">
+    <p class="cs-hero-label">01 / Case Study — 2025</p>
+    <h1 class="cs-hero-title">Agent <em>Hub</em></h1>
+    <p class="cs-hero-desc">I led Learn and Adopt: helping enterprise admins understand AI and plan its activation within Copilot Service Admin Center.</p>
+    <div class="cs-hero-meta">
+      <div class="cs-meta-item">
+        <p class="cs-meta-item-label">Role</p>
+        <p class="cs-meta-item-value">Product Designer</p>
+      </div>
+      <div class="cs-meta-item">
+        <p class="cs-meta-item-label">Design ownership</p>
+        <p class="cs-meta-item-value">Learn &amp; Adopt</p>
+      </div>
+      <div class="cs-meta-item">
+        <p class="cs-meta-item-label">Public preview</p>
+        <p class="cs-meta-item-value">August 2025</p>
+      </div>
+      <div class="cs-meta-item">
+        <p class="cs-meta-item-label">Company</p>
+        <p class="cs-meta-item-value">Microsoft</p>
+      </div>
+    </div>
+    <p class="cs-hero-result"><strong>Release milestone:</strong> Agent Hub entered public preview in August 2025.</p>
+    <p class="cs-note">Selected prototype screens, not the complete experience. UI values are part of the mockups, not measured project results.</p>
+  </section>
+
+  <!-- ARTICLE -->
+  <div class="cs-article">
+    <!-- TOC -->
+    <aside class="cs-toc">
+      <p class="cs-toc-title">Contents</p>
+      <ul class="cs-toc-list">
+        <li><a href="#context">The brief</a></li>
+        <li><a href="#learn">Learn</a></li>
+        <li><a href="#adopt">Adopt</a></li>
+        <li><a href="#research">Scope &amp; collaboration</a></li>
+        <li><a href="#impact">Impact</a></li>
+        <li><a href="#reflection">Reflection</a></li>
+      </ul>
+    </aside>
+
+    <!-- CONTENT -->
+    <main class="cs-content">
+
+      <section class="cs-section reveal" id="context">
+        <div class="cs-section-header">
+          <span class="cs-section-num">01</span>
+          <h2 class="cs-section-title">The <em>brief</em></h2>
+        </div>
+        <p class="cs-body-text" id="problem">Enterprise admins wanted to adopt Copilot and AI agents, but documentation, governance guidance, and activation steps were disconnected. The brief was to bring understanding and action into one admin experience: learn what AI does, understand its requirements, and plan a rollout.</p>
+      </section>
+
+      <div id="design">
+      <section class="cs-section reveal" id="learn">
+        <div class="cs-section-header">
+          <span class="cs-section-num">02</span>
+          <h2 class="cs-section-title">Learn: context <em>before action</em></h2>
+        </div>
+        <p class="cs-body-text">My Learn work brought technical and governance guidance into the hub rather than leaving admins to assemble answers across separate sources. The landing page connects AI learning resources with entry points for rollout planning, credit calculation, and agent insights.</p>
+        <figure class="case-screen">
+          <a href="assets/agenthub-overview.png" target="_blank" rel="noopener noreferrer" aria-label="Open the Agent Hub overview at full size in a new tab">
+            <img src="assets/agenthub-overview.png" width="1056" height="744" alt="Agent Hub landing page with Rollout manager, Calculator, and Agent insights cards above AI agent learning resources and Copilot features." fetchpriority="high" decoding="async" />
+          </a>
+          <figcaption>The landing page brings rollout planning, credit calculation, and agent insights alongside learning resources. This selected prototype screen does not show all learning and governance content. <a href="assets/agenthub-overview.png" target="_blank" rel="noopener noreferrer">View full size ↗</a></figcaption>
+        </figure>
+      </section>
+
+      <section class="cs-section reveal" id="adopt">
+        <div class="cs-section-header">
+          <span class="cs-section-num">03</span>
+          <h2 class="cs-section-title">Adopt: make rollout <em>deliberate</em></h2>
+        </div>
+        <p class="cs-body-text">I designed Rollout Manager as a staged activation flow, separating the choice of agents and capabilities from their configuration. The stepper keeps progress and the later review-and-publish stage visible.</p>
+        <h3 class="design-step">1. Choose what belongs in the rollout</h3>
+        <p class="cs-body-text">Agent selection and capability checkboxes make rollout scope explicit before detailed setup. Admins can choose which capabilities to include rather than treating an agent as an all-or-nothing switch.</p>
+        <figure class="case-screen">
+          <a href="assets/agenthub-adopt-selection.png" target="_blank" rel="noopener noreferrer" aria-label="Open the agent and capability selection screen at full size in a new tab">
+            <img src="assets/agenthub-adopt-selection.png" width="1186" height="742" alt="Create rollout plan drawer showing selectable AI agents, Case Processing Agent capability checkboxes, and a progress stepper before review and publish." loading="lazy" decoding="async" />
+          </a>
+          <figcaption>Agent and capability selection establishes the rollout's scope before configuration. These are selected moments from the flow, not every setup screen. <a href="assets/agenthub-adopt-selection.png" target="_blank" rel="noopener noreferrer">View full size ↗</a></figcaption>
+        </figure>
+        <h3 class="design-step">2. Check readiness and configure behavior</h3>
+        <p class="cs-body-text">For case follow-up and closure, the flow surfaces prerequisite status and rule selection together. It keeps rule selection in context and links to rule editing rather than embedding another full editor. I worked with engineering to align the experience with existing systems.</p>
+        <figure class="case-screen">
+          <a href="assets/agenthub-adopt-rules.png" target="_blank" rel="noopener noreferrer" aria-label="Open the prerequisite and rule configuration screen at full size in a new tab">
+            <img src="assets/agenthub-adopt-rules.png" width="1186" height="742" alt="Case Processing Agent configuration showing completed prerequisites, case follow-up and closure rules, an Add or edit rules link, and progress toward review and publish." loading="lazy" decoding="async" />
+          </a>
+          <figcaption>Readiness and rule configuration appear within the selected capability's setup, before the final review stage. <a href="assets/agenthub-adopt-rules.png" target="_blank" rel="noopener noreferrer">View full size ↗</a></figcaption>
+        </figure>
+      </section>
+      </div>
+
+      <section class="cs-section reveal" id="research">
+        <div class="cs-section-header">
+          <span class="cs-section-num">04</span>
+          <h2 class="cs-section-title">Choosing the <em>scope</em></h2>
+        </div>
+        <p class="cs-body-text">I reviewed legacy work, reframed the problem with PMs, and compared how other platforms centralized guidance and controls. Many answers to admin concerns already existed; the opportunity was to connect them to the adoption journey.</p>
+        <p class="cs-body-text">We started with Learn, Adopt, Track, and Verify. We deferred Verify from this phase and renamed Track to Measure, giving the team a shared three-pillar structure.</p>
+        <div class="pillars-grid">
+          <div class="pillar-card active">
+            <p class="pillar-number">I led design</p>
+            <h3 class="pillar-name"><em>Learn</em></h3>
+            <p class="pillar-desc">Make technical and governance guidance accessible within the hub.</p>
+          </div>
+          <div class="pillar-card active">
+            <p class="pillar-number">I led design</p>
+            <h3 class="pillar-name"><em>Adopt</em></h3>
+            <p class="pillar-desc">Guide phased activation through agent selection and configuration.</p>
+          </div>
+          <div class="pillar-card">
+            <p class="pillar-number">Supporting contribution</p>
+            <h3 class="pillar-name">Measure</h3>
+            <p class="pillar-desc">I supported alignment with the wider hub, not primary design ownership.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- IMPACT -->
+      <section class="cs-section reveal" id="impact">
+        <div class="cs-section-header">
+          <span class="cs-section-num">05</span>
+          <h2 class="cs-section-title">What the work <em>enabled</em></h2>
+        </div>
+        <p class="cs-body-text">Agent Hub reached a public release milestone, alongside internal prioritization and recognition of the Adopt experience.</p>
+
+        <div class="impact-grid reveal">
+          <div class="impact-item highlight">
+            <p class="impact-bullet">Public preview</p>
+            <p class="impact-text">Agent Hub entered <strong>public preview in August 2025.</strong></p>
+          </div>
+          <div class="impact-item">
+            <p class="impact-bullet">Leadership</p>
+            <p class="impact-text">The offsite demo led to <strong>prioritization and a green light for release,</strong> with Adopt called out as a standout experience.</p>
+          </div>
+        </div>
+        <h3 class="design-step">Feedback on the approach</h3>
+        <figure class="project-feedback">
+          <p class="impact-bullet">Leadership team feedback</p>
+          <p class="cs-body-text">Leadership highlighted change management as a major customer challenge and valued giving customers a way to try AI agents.</p>
+          <blockquote>
+            <p>&ldquo;The product thinking here is just exquisite.&rdquo;</p>
+          </blockquote>
+          <figcaption>Leadership team &middot; Internal feedback excerpt.</figcaption>
+        </figure>
+        <figure class="project-feedback">
+          <p class="impact-bullet">Public preview feedback</p>
+          <blockquote>
+            <p>&ldquo;The Rollout Manager is surprisingly smart. It lets you phase deployments by team, geography, or use case &mdash; so you can scale with some thought, not just speed.&rdquo;</p>
+          </blockquote>
+          <figcaption>Mark McLeish &middot; Public LinkedIn post about the Agent Hub preview.</figcaption>
+        </figure>
+        <p class="cs-note">These are qualitative reactions to the work and preview, not measured adoption or business results.</p>
+      </section>
+
+      <!-- REFLECTION -->
+      <section class="reflection-block reveal" id="reflection">
+        <h2 class="reflection-label">06 / Reflection</h2>
+        <p class="reflection-text">This project reinforced the value of involving engineering early and making scope decisions explicit. My focus was not just organizing information, but connecting what admins need to understand with the decisions they need to make.</p>
+      </section>
+
+    </main>
+  </div>
+
+  <!-- NEXT PROJECT -->
+  <div class="next-project">
+    <p class="next-label">Explore more</p>
+    <a href="connected-selling.html" class="next-card">
+      <div>
+        <p class="next-card-title">Connected Selling</p>
+        <p class="next-card-sub">Next case study / Anonymized</p>
+      </div>
+      <div class="next-arrow" aria-hidden="true">
+        <svg width="18" height="18" viewBox="0 0 16 16" fill="none" stroke-width="1.5">
+          <path d="M3 13L13 3M13 3H6M13 3V10"/>
+        </svg>
+      </div>
+    </a>
+    <a href="index.html#projects" class="next-card">
+      <div>
+        <p class="next-card-title">Back to work</p>
+        <p class="next-card-sub">View all case studies</p>
+      </div>
+      <div class="next-arrow">
+        <svg width="18" height="18" viewBox="0 0 16 16" fill="none" stroke-width="1.5">
+          <path d="M3 13L13 3M13 3H6M13 3V10"/>
+        </svg>
+      </div>
+    </a>
+  </div>
+
+  <footer>
+    <div class="footer-left">Olga<br><em>Caterenciuc.</em></div>
+    <div class="footer-right">
+      <div class="footer-cta">
+        <a href="mailto:hello@olgacaterenciuc.co" class="btn-primary">Let's chat</a>
+        <a href="https://www.linkedin.com/in/olga-caterenciuc-95aa991a5/" target="_blank" rel="noopener noreferrer" class="btn-ghost">LinkedIn ↗</a>
+      </div>
+      <p class="footer-copy">Product Designer · Microsoft · 2025</p>
+    </div>
+  </footer>
+
+  <script>
+    const cursor = document.getElementById('cursor');
+    const ring = document.getElementById('cursorRing');
+    let mx = -100, my = -100, rx = -100, ry = -100;
+    document.addEventListener('mousemove', e => {
+      mx = e.clientX; my = e.clientY;
+      cursor.style.left = mx + 'px'; cursor.style.top = my + 'px';
+    });
+    function animateRing() {
+      rx += (mx - rx) * .12; ry += (my - ry) * .12;
+      ring.style.left = rx + 'px'; ring.style.top = ry + 'px';
+      requestAnimationFrame(animateRing);
+    }
+    animateRing();
+    document.querySelectorAll('a,button').forEach(el => {
+      el.addEventListener('mouseenter', () => document.body.classList.add('ch'));
+      el.addEventListener('mouseleave', () => document.body.classList.remove('ch'));
+    });
+    const io = new IntersectionObserver(entries => {
+      entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); io.unobserve(e.target); } });
+    }, { threshold: .08 });
+    document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+  </script>
+</body>
+</html>

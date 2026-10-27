@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="An anonymized case study about shaping visual fidelity and structure for a cross-product storytelling demo in approximately 1–1.5 weeks." />
+  <title>Connected Selling — Case Study</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=DM+Mono:wght@300;400&family=Syne:wght@400;500;700;800&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --ivory: #F5F0E8; --ink: #0F0E0C; --warm-mid: #7A6F63;
+      --accent: #C8533A; --surface: #EDEAE2; --border: rgba(15,14,12,.1);
+      --font-display: 'Cormorant Garamond', serif;
+      --font-ui: 'Syne', sans-serif;
+      --font-mono: 'DM Mono', monospace;
+    }
+    html { scroll-behavior: smooth; }
+    body { background: var(--ivory); color: var(--ink); font-family: var(--font-ui); }
+    nav { position: fixed; top: 0; left: 0; right: 0; z-index: 50; display: flex; justify-content: space-between; align-items: center; padding: 28px 60px; }
+    .nav-back, .nav-links a { font-family: var(--font-mono); font-size: 11px; letter-spacing: .14em; text-transform: uppercase; color: var(--ink); text-decoration: none; }
+    .nav-back { gap: 10px; }
+    .nav-links { display: flex; gap: 40px; list-style: none; }
+    .nav-links a { opacity: .7; }
+    .nav-links a:hover { opacity: 1; }
+    .cs-hero { padding: 132px 60px 48px; max-width: 1280px; margin: 0 auto; }
+    .eyebrow, .meta-label, .cs-toc-title, .section-number, .step-label, .footer-label { font-family: var(--font-mono); font-size: 10px; letter-spacing: .18em; text-transform: uppercase; color: var(--warm-mid); }
+    .eyebrow { margin-bottom: 20px; }
+    .cs-hero-title { font-family: var(--font-display); font-size: clamp(64px, 8vw, 112px); font-weight: 300; line-height: .92; letter-spacing: -.02em; }
+    em { font-style: italic; color: var(--accent); }
+    .cs-hero-desc { margin-top: 24px; max-width: 760px; font-family: var(--font-display); font-size: clamp(20px, 2vw, 26px); font-weight: 300; line-height: 1.4; }
+    .cs-hero-meta { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 24px; margin-top: 32px; max-width: 960px; }
+    .meta-label { margin-bottom: 8px; }
+    .meta-value { font-size: 14px; line-height: 1.5; }
+    .hero-result { margin-top: 24px; font-size: 14px; line-height: 1.6; }
+    .scope-disclosure { margin-top: 20px; max-width: 760px; font-family: var(--font-mono); font-size: 11px; color: var(--warm-mid); line-height: 1.8; }
+    .cs-preview { max-width: 1280px; padding: 0 60px; margin: 0 auto; }
+    .cs-article { display: grid; grid-template-columns: 200px minmax(0, 1fr); gap: 80px; max-width: 1280px; padding: 64px 60px 0; margin: 0 auto; }
+    .cs-toc { position: sticky; top: 128px; height: fit-content; }
+    .cs-toc-title { margin-bottom: 20px; }
+    .cs-toc-list { display: flex; flex-direction: column; gap: 16px; list-style: none; }
+    .cs-toc-list a { font-family: var(--font-mono); font-size: 11px; color: var(--warm-mid); text-decoration: none; }
+    .cs-toc-list a:hover { color: var(--accent); }
+    .cs-content { min-width: 0; }
+    .cs-section { margin-bottom: 80px; }
+    .cs-section-header { display: flex; align-items: baseline; gap: 20px; border-bottom: 1px solid var(--border); padding-bottom: 20px; margin-bottom: 32px; }
+    h2 { font-family: var(--font-display); font-size: clamp(36px, 4vw, 52px); font-weight: 300; line-height: 1.1; }
+    h3 { font-family: var(--font-display); font-size: 30px; font-weight: 400; line-height: 1.15; margin-bottom: 12px; }
+    .body-text, .detail-list { font-family: var(--font-display); font-size: 21px; font-weight: 300; line-height: 1.7; margin-bottom: 24px; }
+    .detail-list { padding-left: 24px; }
+    .detail-list li + li { margin-top: 12px; }
+    .workflow { display: grid; gap: 2px; margin: 32px 0; }
+    .workflow-comparison { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .workflow-step { padding: 32px; background: var(--surface); }
+    .step-label { margin-bottom: 16px; }
+    .workflow-step p:last-child { margin-bottom: 0; }
+    .scope-note { font-family: var(--font-mono); font-size: 11px; color: var(--warm-mid); line-height: 1.8; }
+    .demo-figure { margin: 0; }
+    .annotated-screen { position: relative; }
+    .demo-figure a { display: block; }
+    .demo-figure img { display: block; width: 100%; max-width: 1479px; height: auto; border: 0; border-radius: 8px; box-shadow: 0 16px 40px rgba(15,14,12,.1), 0 3px 10px rgba(15,14,12,.05); }
+    .demo-figure figcaption { margin-top: 24px; font-family: var(--font-mono); font-size: 11px; color: var(--warm-mid); line-height: 1.8; }
+    .annotation-pin { position: absolute; display: grid; place-items: center; width: 24px; height: 24px; border-radius: 50%; background: var(--accent); color: var(--ivory); font-family: var(--font-mono); font-size: 12px; box-shadow: 0 0 0 3px var(--ivory); pointer-events: none; transform: translate(-50%, -50%); }
+    .pin-context { left: 69.5%; top: 25.5%; }
+    .pin-brief { left: 70%; top: 61%; }
+    .pin-thread { left: 96.5%; top: 43%; }
+    .annotation-list { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 32px; padding-left: 20px; font-family: var(--font-ui); font-size: 13px; line-height: 1.6; color: var(--ink); }
+    .demo-figure .scope-note { margin-top: 16px; }
+    .outcome { padding: 40px; background: var(--ink); color: var(--ivory); }
+    .outcome .body-text:last-child { margin-bottom: 0; }
+    .customer-feedback { margin: 32px 0 24px; padding: 32px; border-left: 2px solid var(--accent); background: var(--surface); }
+    .customer-feedback blockquote { font-family: var(--font-display); font-size: clamp(24px, 2.4vw, 32px); font-weight: 300; line-height: 1.5; }
+    .customer-feedback figcaption { margin-top: 20px; font-family: var(--font-mono); font-size: 11px; color: var(--warm-mid); line-height: 1.8; }
+    .customer-feedback + .scope-note { margin-bottom: 32px; }
+    .case-navigation { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 24px; padding: 40px 0 64px; border-top: 1px solid var(--border); }
+    .case-navigation a { display: inline-flex; align-items: center; min-height: 44px; font-family: var(--font-mono); font-size: 11px; color: var(--ink); text-underline-offset: 6px; }
+    footer { padding: 32px 60px; border-top: 1px solid var(--border); }
+    @media (max-width: 1024px) {
+      .cs-article { grid-template-columns: 1fr; gap: 0; padding: 40px 40px 0; }
+    }
+    @media (max-width: 768px) {
+      .cs-hero { padding: 120px 24px 32px; }
+      .cs-preview { padding: 0 24px; }
+      .cs-article { padding: 24px 24px 0; }
+      .cs-hero-meta { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .workflow-step, .outcome, .customer-feedback { padding: 24px; }
+      .workflow-comparison { grid-template-columns: 1fr; }
+      .annotation-list { grid-template-columns: 1fr; gap: 12px; }
+      .annotation-pin { width: 18px; height: 18px; font-size: 10px; box-shadow: 0 0 0 2px var(--ivory); }
+      .cs-section-header { gap: 12px; }
+      footer { padding: 32px 24px; }
+    }
+  </style>
+  <link rel="stylesheet" href="prototype.css" />
+</head>
+<body>
+  <nav aria-label="Main navigation">
+    <a class="nav-back" href="index.html#projects"><span aria-hidden="true">&larr;</span> All work</a>
+    <ul class="nav-links">
+      <li><a href="index.html#projects">Work</a></li>
+      <li><a href="index.html#about">About</a></li>
+    </ul>
+  </nav>
+
+  <main>
+    <header class="cs-hero">
+      <p class="eyebrow">02 / Anonymized Case Study</p>
+      <h1 class="cs-hero-title">Connected<br><em>Selling</em></h1>
+      <p class="cs-hero-desc">I shaped the visual fidelity and structure of an eight-scene demo connecting CRM, collaboration, and AI.</p>
+      <dl class="cs-hero-meta">
+        <div>
+          <dt class="meta-label">Contribution</dt>
+          <dd class="meta-value">Visual fidelity &amp; structure</dd>
+        </div>
+        <div>
+          <dt class="meta-label">Timeline</dt>
+          <dd class="meta-value">Approximately 1–1.5 weeks</dd>
+        </div>
+        <div>
+          <dt class="meta-label">Format</dt>
+          <dd class="meta-value">Click-through &amp; demo video</dd>
+        </div>
+        <div>
+          <dt class="meta-label">Audience</dt>
+          <dd class="meta-value">Customer's internal teams</dd>
+        </div>
+      </dl>
+      <p class="hero-result"><strong>Customer response:</strong> The requesting customer praised how clearly the demo communicated the real workflow.</p>
+      <p class="scope-disclosure">An anonymized storytelling demo, not a released feature. Full prototype withheld for confidentiality; the selected screen uses fictional presentation data.</p>
+    </header>
+
+    <section class="cs-preview" aria-label="Selected demo screen">
+      <figure class="demo-figure">
+        <div class="annotated-screen">
+          <a href="assets/connected-selling-overview.png" target="_blank" rel="noopener noreferrer" aria-label="Open the demo screenshot at full size in a new tab" aria-describedby="demo-screen-caption">
+            <img src="assets/connected-selling-overview.png" width="1479" height="768" fetchpriority="high" decoding="async" alt="Collaboration workspace prototype with fictional demo data showing an opportunity alert, a pre-meeting brief, and a talking-points thread in the right-side panel." />
+          </a>
+          <span class="annotation-pin pin-context" aria-hidden="true">1</span>
+          <span class="annotation-pin pin-brief" aria-hidden="true">2</span>
+          <span class="annotation-pin pin-thread" aria-hidden="true">3</span>
+        </div>
+        <figcaption id="demo-screen-caption">
+          <ol class="annotation-list">
+            <li><strong>CRM-sourced context.</strong> Opportunity details appear in the channel, illustrating how business context could enter the collaboration workspace.</li>
+            <li><strong>Meeting preparation.</strong> A pre-meeting brief brings client priorities and suggested talking points into the same view.</li>
+            <li><strong>Threaded follow-up.</strong> The right-side thread develops the talking points alongside the channel conversation.</li>
+          </ol>
+          <p class="scope-note">Selected concept screen with fictional data, not the complete CRM experience. Select the image to view it at full size.</p>
+        </figcaption>
+      </figure>
+    </section>
+
+    <div class="cs-article">
+      <aside class="cs-toc" aria-label="Case study contents">
+        <p class="cs-toc-title">Contents</p>
+        <ul class="cs-toc-list">
+          <li><a href="#context">Context</a></li>
+          <li><a href="#contribution">My contribution</a></li>
+          <li><a href="#problem">Problem</a></li>
+          <li><a href="#story">Demo story</a></li>
+          <li><a href="#challenges">Challenges</a></li>
+          <li><a href="#collaboration">The pivot</a></li>
+          <li><a href="#outcome">Outcome &amp; takeaways</a></li>
+        </ul>
+      </aside>
+
+      <div class="cs-content">
+        <section class="cs-section" id="context" aria-labelledby="context-heading">
+          <div class="cs-section-header">
+            <span class="section-number">01</span>
+            <h2 id="context-heading">The <em>context</em></h2>
+          </div>
+          <p class="body-text">An enterprise customer reconsidering its collaboration and CRM tools wanted to make a connected workflow tangible for its internal teams at a leadership event. The brief was a storytelling demo: bring collaboration, sales and service workflows, and an internally built agent together in one experience.</p>
+          <p class="body-text">We had approximately 1–1.5 weeks to create a click-through for a demo video, with one script connecting multiple products and personas.</p>
+        </section>
+
+        <section class="cs-section" id="contribution" aria-labelledby="contribution-heading">
+          <div class="cs-section-header">
+            <span class="section-number">02</span>
+            <h2 id="contribution-heading">My <em>contribution</em></h2>
+          </div>
+          <p class="body-text">I drove visual fidelity and structure. When reviews flagged differences in spacing, headers, icons, and threaded conversations, my focus was bringing the screens closer to familiar product patterns while keeping the multi-product story coherent.</p>
+          <p class="body-text">I drew on the platform team's UI guidance rather than inventing a separate visual language. Another designer focused on interaction design, timing, voice-overs, and micro-interactions.</p>
+        </section>
+
+        <section class="cs-section" id="problem" aria-labelledby="problem-heading">
+          <div class="cs-section-header">
+            <span class="section-number">03</span>
+            <h2 id="problem-heading">The <em>problem</em></h2>
+          </div>
+          <p class="body-text">Sellers lacked a single place to use their organization's AI tools, and CRM access sat outside the collaboration workspace. The customer also wanted threaded channels and chats. Our challenge was to show how these disconnected pieces could form a familiar, connected way of working.</p>
+        </section>
+
+        <section class="cs-section" id="story" aria-labelledby="story-heading">
+          <div class="cs-section-header">
+            <span class="section-number">04</span>
+            <h2 id="story-heading">The demo <em>story</em></h2>
+          </div>
+          <p class="body-text">The eight-scene story followed an opportunity from its appearance in a channel through meeting preparation and a client call, ending with the CRM updating itself.</p>
+          <div class="workflow workflow-comparison" aria-label="Starting workflow compared with the proposed demo experience">
+            <div class="workflow-step">
+              <p class="step-label">Before / Starting workflow</p>
+              <h3>CRM outside the workspace</h3>
+              <p class="body-text">Information and workflows were separated across applications.</p>
+            </div>
+            <div class="workflow-step">
+              <p class="step-label">After / Demo concept</p>
+              <h3>CRM within the workspace</h3>
+              <p class="body-text">The demo proposed CRM access alongside collaboration, connecting customer context with preparation and follow-through.</p>
+            </div>
+          </div>
+          <p class="scope-note">The connected state was explored in the demo, not released as a feature.</p>
+        </section>
+
+        <section class="cs-section" id="challenges" aria-labelledby="challenges-heading">
+          <div class="cs-section-header">
+            <span class="section-number">05</span>
+            <h2 id="challenges-heading">Designing within <em>constraints</em></h2>
+          </div>
+          <ul class="detail-list">
+            <li><strong>Complexity:</strong> six products and agents, multiple personas, and one narrative to follow.</li>
+            <li><strong>Authenticity:</strong> experienced users needed to recognize the product, not just understand the story.</li>
+            <li><strong>Time:</strong> multiple feedback rounds a day, coordinated across product teams, customer stakeholders, and time zones.</li>
+          </ul>
+        </section>
+
+        <section class="cs-section" id="collaboration" aria-labelledby="collaboration-heading">
+          <div class="cs-section-header">
+            <span class="section-number">06</span>
+            <h2 id="collaboration-heading">The <em>pivot</em></h2>
+          </div>
+          <div class="workflow" aria-label="Initial issue, pivot in approach, and observed improvement">
+            <div class="workflow-step">
+              <p class="step-label">Initial issue</p>
+              <h3>The first prototype lacked authenticity</h3>
+              <p class="body-text">The story was present, but product experts spotted unfamiliar spacing, headers, icons, and conversation patterns.</p>
+            </div>
+            <div class="workflow-step">
+              <p class="step-label">Pivot in approach</p>
+              <h3>Ground the demo in the real product</h3>
+              <p class="body-text">We changed our approach: partner with the platform design team, use its repositories and UI guidance, and reuse established patterns. Detailed reviews, down to border radius, became part of the process.</p>
+            </div>
+            <div class="workflow-step">
+              <p class="step-label">Observed improvement</p>
+              <h3>Reviewers noticed the difference</h3>
+              <p class="body-text">Reviewers familiar with earlier versions commented on the progress and increased authenticity.</p>
+            </div>
+          </div>
+          <p class="body-text">A full rebuild was considered. With team support, we instead iterated on the existing prototype, incorporating customer terminology and workflow requests without losing the script. This was a pivot in approach, not a restart.</p>
+          <p class="body-text">Believability also depended on behavior: loading states, a join sound, and a pause before the meeting complemented the visual work.</p>
+        </section>
+
+        <section class="cs-section" id="outcome" aria-labelledby="outcome-heading">
+          <div class="cs-section-header">
+            <span class="section-number">07</span>
+            <h2 id="outcome-heading">Outcome &amp; <em>takeaways</em></h2>
+          </div>
+          <div class="outcome">
+            <p class="body-text">The requesting customer's representative thanked the team for bringing the workflow to life. They also highlighted the escalation-support portion and expected it to resonate with stakeholders.</p>
+          </div>
+          <figure class="customer-feedback">
+            <p class="step-label">Direct customer feedback</p>
+            <blockquote>
+              <p>&ldquo;you've been able to articulate the real flow of work / journey in just a few clicks&rdquo;</p>
+            </blockquote>
+            <figcaption>Requesting customer representative &middot; Excerpt; identity withheld.</figcaption>
+          </figure>
+          <p class="scope-note">Feedback on the demo, not measured adoption or confirmation of event results.</p>
+          <h3>What I took forward</h3>
+          <ul class="detail-list">
+            <li><strong>Details build trust.</strong> Visual and behavioral cues make a concept believable.</li>
+            <li><strong>Expertise enables iteration.</strong> Product-team guidance helped us improve rather than restart.</li>
+            <li><strong>Clear roles support speed.</strong> Shared reviews and complementary responsibilities kept the work moving.</li>
+          </ul>
+        </section>
+
+        <div class="case-navigation" aria-label="More portfolio work">
+          <a href="agenthub.html">&larr; Previous case study: Agent Hub</a>
+          <a href="index.html#projects">Back to work &rarr;</a>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer>
+    <p class="footer-label">Selected work / Anonymized demo case study</p>
+  </footer>
+</body>
+</html>
