@@ -10,6 +10,8 @@ My personal portfolio website showcasing my projects, skills, and experience.
 The site uses the HTML designs supplied in the ZIP, with inline CSS and JavaScript
 and shared navigation and accessibility styles in [prototype.css](./prototype.css).
 No framework, package installation, or build step is required.
+The landing-page hero keeps the full surname on its own terracotta italic line,
+with responsive sizing to prevent it from breaking on mobile.
 
 ## Prototype flow
 
@@ -23,9 +25,21 @@ No framework, package installation, or build step is required.
 
 **Work** and **About** navigation is available on desktop and mobile. Links support
 keyboard focus, and animations respect the system's reduced-motion preference.
+Small text and controls use higher-contrast colors while retaining the original
+palette. Every page includes a main-content landmark and a search description.
+On the animated pages, content and native cursors remain available without
+JavaScript. Agent Hub screenshot dimensions reserve space before lazy loading.
 Email and LinkedIn links open their real destinations rather than prototype screens.
+Both **Let's chat** links open the visitor's configured email app with
+**olgacaterenciucwork@gmail.com** in the recipient (To) field. All LinkedIn links
+point to the [owner-confirmed profile](https://www.linkedin.com/in/olga-caterenciuc-95aa991a5/).
+The website does not select the sender account or send an email automatically.
 The landing-page case-study cards are text-only; project screenshots appear inside
 the case studies.
+Below the two full case studies, **More selected work** presents three text-only
+snapshots covering AI value and cost planning, AI product direction, and service
+workflows with coded prototyping. These are summaries, not links to additional
+case studies. They omit internal project names, dates, preview status, and visuals.
 
 ## Local preview
 
@@ -41,8 +55,7 @@ Open <http://127.0.0.1:8000> in your browser. Stop the server with `Ctrl+C`.
 
 Fonts load from Google Fonts and require an internet connection. Case-study
 screenshots are stored locally in [assets](./assets).
-Contact details are preserved from the supplied designs.
-One remaining case-study card is intentionally marked "Coming soon."
+Contact destinations are confirmed by the portfolio owner.
 
 ### Agent Hub
 
@@ -54,7 +67,8 @@ The three supplied prototype exports replace the original external-image gallery
 
 Only decorative export edges are trimmed; application pixels are not rescaled,
 and the original attachments are unchanged. Images display without cropping,
-upscaling, grayscale, or added borders, with soft elevation and full-size links.
+upscaling, grayscale, or added borders, with soft elevation. Screenshots remain
+clickable to open the original images; separate full-size caption links are omitted.
 These are selected prototype screens, not the entire experience or evidence of
 measured adoption or savings.
 
@@ -76,6 +90,8 @@ business results, or the scale of public engagement.
 ## Confidential case study
 
 Connected Selling is a descriptive portfolio title, not the original project name.
+The owner confirmed that this work is from 2026; its portfolio card and case-study
+heading show that year, while the detailed timeline retains the 1–1.5 week duration.
 The case study is based on the provided summary, presentation-slide references, and
 an anonymized excerpt from customer feedback,
 not the protected source document. The slides clarified visual-fidelity and

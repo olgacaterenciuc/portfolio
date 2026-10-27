@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Olga Caterenciuc is a Product Designer at Microsoft, turning complex enterprise problems into clear product concepts, detailed interactions, and coded prototypes." />
   <title>Olga Caterenciuc — Product Designer</title>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=DM+Mono:wght@300;400&family=Syne:wght@400;500;700;800&display=swap" rel="stylesheet" />
   <style>
@@ -38,10 +39,10 @@
 
     /* HERO */
     .hero { min-height: 100vh; display: grid; grid-template-columns: 1fr 1fr; padding: 0 60px; position: relative; overflow: hidden; }
-    .hero-left { display: flex; flex-direction: column; justify-content: flex-end; padding-bottom: 80px; z-index: 2; }
+    .hero-left { display: flex; flex-direction: column; justify-content: flex-end; padding: 156px 0 80px; z-index: 2; }
     .hero-eyebrow { font-family: var(--font-mono); font-size: 11px; letter-spacing: .2em; text-transform: uppercase; color: var(--warm-mid); margin-bottom: 24px; opacity: 0; animation: fadeUp .8s ease .2s forwards; }
     .hero-name { font-family: var(--font-display); font-size: clamp(72px, 8vw, 128px); font-weight: 300; line-height: .9; letter-spacing: -.02em; color: var(--ink); opacity: 0; animation: fadeUp .9s ease .4s forwards; }
-    .hero-name em { font-style: italic; color: var(--accent); }
+    .hero-name em { display: block; font-style: italic; color: var(--accent); white-space: nowrap; }
     .hero-tagline { margin-top: 40px; font-family: var(--font-display); font-size: clamp(18px, 1.8vw, 24px); font-weight: 300; font-style: italic; color: var(--warm-mid); max-width: 380px; line-height: 1.5; opacity: 0; animation: fadeUp .9s ease .65s forwards; }
     .hero-right { display: flex; flex-direction: column; justify-content: flex-end; align-items: flex-end; padding-bottom: 80px; z-index: 2; }
     .hero-meta { text-align: right; opacity: 0; animation: fadeUp .8s ease .8s forwards; }
@@ -78,10 +79,12 @@
     .case-card-arrow svg { transition: stroke .4s; stroke: var(--ink); }
     .case-card:hover .case-card-arrow svg { stroke: var(--ivory); }
 
-    .coming-soon-row { display: grid; grid-template-columns: 1fr 1fr; gap: 2px; margin-top: 2px; }
-    .coming-card { padding: 48px 56px; background: var(--surface); border: 1px dashed rgba(15,14,12,.12); display: flex; flex-direction: column; gap: 16px; opacity: .6; }
-    .coming-card-label { font-family: var(--font-mono); font-size: 10px; letter-spacing: .2em; text-transform: uppercase; color: var(--warm-mid); }
-    .coming-card-title { font-family: var(--font-display); font-size: 32px; font-weight: 300; color: var(--ink); }
+    .work-snapshots { padding: 0 60px; }
+    .work-snapshots-heading { font-family: var(--font-display); font-size: clamp(36px, 4vw, 52px); font-weight: 300; line-height: 1.1; letter-spacing: -.02em; margin-bottom: 32px; }
+    .work-snapshots-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 40px; }
+    .work-snapshot { border-top: 1px solid var(--border); padding-top: 24px; }
+    .work-snapshot h3 { font-size: 18px; font-weight: 500; line-height: 1.4; margin-bottom: 16px; }
+    .work-snapshot p { font-size: 14px; line-height: 1.8; max-width: 60ch; }
 
     /* ABOUT */
     .about-section { padding: 120px 60px; display: grid; grid-template-columns: 1fr 1.4fr; gap: 80px; align-items: start; }
@@ -118,10 +121,11 @@
     @media (max-width: 900px) {
       nav { padding: 24px 32px; } .nav-links { display: none; }
       .hero { grid-template-columns: 1fr; padding: 0 32px; }
+      .hero-name em { font-size: min(1em, 14vw); }
       .hero-right { display: none; }
       .section-divider, .projects-grid { padding: 0 32px; }
-      .coming-soon-row { grid-template-columns: 1fr; }
-      .coming-card { padding: 40px 32px; }
+      .work-snapshots { padding: 0 32px; }
+      .work-snapshots-grid { grid-template-columns: 1fr; gap: 32px; }
       .about-section { grid-template-columns: 1fr; padding: 80px 32px; gap: 48px; }
       .about-heading-wrap { position: static; }
       footer { flex-direction: column; gap: 32px; align-items: flex-start; padding: 48px 32px 40px; }
@@ -129,6 +133,14 @@
     }
   </style>
   <link rel="stylesheet" href="prototype.css" />
+  <noscript>
+    <style>
+      body { cursor: auto; }
+      a, .case-card, .btn-primary, .btn-ghost { cursor: pointer; }
+      .cursor, .cursor-ring { display: none; }
+      .reveal { opacity: 1; transform: none; }
+    </style>
+  </noscript>
 </head>
 <body>
   <div class="cursor" id="cursor"></div>
@@ -143,10 +155,11 @@
     </ul>
   </nav>
 
+  <main>
   <section class="hero">
     <div class="hero-left">
       <p class="hero-eyebrow">Product Designer</p>
-      <h1 class="hero-name">Olga<br><em>Cater</em><br>enciuc</h1>
+      <h1 class="hero-name">Olga <em>Caterenciuc</em></h1>
       <p class="hero-tagline">Designing clarity<br>into complexity.</p>
     </div>
     <div class="hero-right">
@@ -164,9 +177,9 @@
 
   <section class="projects-section" id="projects">
     <div class="section-divider reveal">
-      <span class="section-divider-label">Selected Work</span>
+      <span class="section-divider-label">Case Studies</span>
       <div class="section-divider-line"></div>
-      <span class="section-divider-label">2025</span>
+      <span class="section-divider-label">2025–2026</span>
     </div>
     <div class="projects-grid">
       <a href="agenthub.html" class="case-card reveal">
@@ -200,7 +213,7 @@
           <div class="case-card-footer">
             <span class="case-card-tag">Demo</span>
             <span class="case-card-tag">AI</span>
-            <span class="case-card-tag">1–1.5 weeks</span>
+            <span class="case-card-tag">2026</span>
             <div class="case-card-arrow">
               <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke-width="1.5" aria-hidden="true">
                 <path d="M3 13L13 3M13 3H6M13 3V10"/>
@@ -209,10 +222,24 @@
           </div>
         </div>
       </a>
-      <div class="coming-card reveal">
-        <span class="coming-card-label">03 / Coming soon</span>
-        <p class="coming-card-title">Next<br>Case Study</p>
-      </div>
+    </div>
+  </section>
+
+  <section class="work-snapshots" id="more-work" aria-labelledby="more-work-heading">
+    <h2 class="work-snapshots-heading reveal" id="more-work-heading">More selected work</h2>
+    <div class="work-snapshots-grid">
+      <article class="work-snapshot reveal">
+        <h3>AI value &amp; cost planning</h3>
+        <p>Designed an end-to-end experience for evaluating AI investment. Restructured onboarding around the information users needed to provide, separated value from cost, and replaced dropdowns with ranked feature cards. Made assumptions editable so users could compare options and build a plan around their own priorities.</p>
+      </article>
+      <article class="work-snapshot reveal">
+        <h3>From AI vision to detailed design</h3>
+        <p>Led a vision concept and demo that helped shape a broader product redesign. Shifted the experience from browsing capabilities to identifying customer problems worth solving. Carried that direction into homepage design, detailed exploration, and prioritization, connecting early product strategy with concrete interaction decisions.</p>
+      </article>
+      <article class="work-snapshot reveal">
+        <h3>Service workflows &amp; coded prototyping</h3>
+        <p>Redesigned chat and voice workflows, including workspace controls and outbound calling. Joined mid-cycle and learned to work directly in a coded prototype alongside engineering. Refined interactions through daily collaboration and bug bashes, and helped another designer get started with the code-based workflow.</p>
+      </article>
     </div>
   </section>
 
@@ -221,7 +248,7 @@
       <h2 class="about-heading">About<br><em>me.</em></h2>
     </div>
     <div class="about-body">
-      <p class="about-bio reveal">I'm a Product Designer on the Dynamics 365 Customer Service team at Microsoft. I design AI-driven tools that help customer service agents and supervisors work smarter, faster, and with more confidence.</p>
+      <p class="about-bio reveal">I'm a Product Designer at Microsoft, designing enterprise experiences that make complex systems easier to understand and use. I turn ambiguous problems into clear product concepts and detailed interactions, working closely with product and engineering through design and coded prototyping.</p>
       <div class="experience-list reveal">
         <div class="exp-item">
           <div><p class="exp-role">Product Designer</p><p class="exp-company">Microsoft</p></div>
@@ -237,15 +264,17 @@
         </div>
       </div>
       <div class="about-cta reveal">
-        <a href="mailto:hello@olgacaterenciuc.co" class="btn-primary">Let's chat</a>
+        <a href="mailto:olgacaterenciucwork@gmail.com" class="btn-primary">Let's chat</a>
         <a href="https://www.linkedin.com/in/olga-caterenciuc-95aa991a5/" target="_blank" rel="noopener noreferrer" class="btn-ghost">LinkedIn ↗</a>
       </div>
     </div>
   </section>
 
+  </main>
+
   <footer>
     <div class="footer-left">Olga<br><em>Caterenciuc.</em></div>
-    <div class="footer-right"><p class="footer-copy">Product Designer · Microsoft · 2025</p></div>
+    <div class="footer-right"><p class="footer-copy">Product Designer · Microsoft · 2026</p></div>
   </footer>
 
   <script>

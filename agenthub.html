@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="How Olga Caterenciuc led Learn and Adopt design for Agent Hub, helping enterprise admins understand AI and plan staged activation. Public preview: August 2025." />
   <title>Agent Hub — Olga Caterenciuc</title>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=DM+Mono:wght@300;400&family=Syne:wght@400;500;700;800&display=swap" rel="stylesheet" />
   <style>
@@ -92,10 +93,9 @@
 
     .design-step { font-family: var(--font-ui); font-size: 18px; font-weight: 500; line-height: 1.5; margin: 40px 0 16px; }
     .case-screen { margin: 32px 0 48px; }
-    .case-screen > a { display: block; width: fit-content; max-width: 100%; margin: 0 auto; border-radius: 8px; }
-    .case-screen img { display: block; width: auto; max-width: 100%; height: auto; border: 0; border-radius: 8px; box-shadow: 0 16px 40px rgba(15,14,12,.1), 0 3px 10px rgba(15,14,12,.05); }
+    .case-screen > a { display: block; width: 100%; margin: 0 auto; border-radius: 8px; }
+    .case-screen img { display: block; width: 100%; max-width: 100%; height: auto; border: 0; border-radius: 8px; box-shadow: 0 16px 40px rgba(15,14,12,.1), 0 3px 10px rgba(15,14,12,.05); }
     .case-screen figcaption { margin-top: 20px; font-size: 13px; line-height: 1.7; color: var(--warm-mid); }
-    .case-screen figcaption a { color: var(--accent); text-underline-offset: 3px; white-space: nowrap; }
 
     /* Outcomes */
     .impact-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 2px; margin: 48px 0; }
@@ -173,6 +173,14 @@
     }
   </style>
   <link rel="stylesheet" href="prototype.css" />
+  <noscript>
+    <style>
+      body { cursor: auto; }
+      a, .case-card, .btn-primary, .btn-ghost { cursor: pointer; }
+      .cursor, .cursor-ring { display: none; }
+      .reveal { opacity: 1; transform: none; }
+    </style>
+  </noscript>
 </head>
 <body>
   <div class="cursor" id="cursor"></div>
@@ -192,6 +200,7 @@
     </ul>
   </nav>
 
+  <main>
   <!-- HERO -->
   <section class="cs-hero">
     <p class="cs-hero-label">01 / Case Study — 2025</p>
@@ -235,7 +244,7 @@
     </aside>
 
     <!-- CONTENT -->
-    <main class="cs-content">
+    <div class="cs-content">
 
       <section class="cs-section reveal" id="context">
         <div class="cs-section-header">
@@ -256,7 +265,7 @@
           <a href="assets/agenthub-overview.png" target="_blank" rel="noopener noreferrer" aria-label="Open the Agent Hub overview at full size in a new tab">
             <img src="assets/agenthub-overview.png" width="1056" height="744" alt="Agent Hub landing page with Rollout manager, Calculator, and Agent insights cards above AI agent learning resources and Copilot features." fetchpriority="high" decoding="async" />
           </a>
-          <figcaption>The landing page brings rollout planning, credit calculation, and agent insights alongside learning resources. This selected prototype screen does not show all learning and governance content. <a href="assets/agenthub-overview.png" target="_blank" rel="noopener noreferrer">View full size ↗</a></figcaption>
+          <figcaption>The landing page brings rollout planning, credit calculation, and agent insights alongside learning resources. This selected prototype screen does not show all learning and governance content.</figcaption>
         </figure>
       </section>
 
@@ -272,7 +281,7 @@
           <a href="assets/agenthub-adopt-selection.png" target="_blank" rel="noopener noreferrer" aria-label="Open the agent and capability selection screen at full size in a new tab">
             <img src="assets/agenthub-adopt-selection.png" width="1186" height="742" alt="Create rollout plan drawer showing selectable AI agents, Case Processing Agent capability checkboxes, and a progress stepper before review and publish." loading="lazy" decoding="async" />
           </a>
-          <figcaption>Agent and capability selection establishes the rollout's scope before configuration. These are selected moments from the flow, not every setup screen. <a href="assets/agenthub-adopt-selection.png" target="_blank" rel="noopener noreferrer">View full size ↗</a></figcaption>
+          <figcaption>Agent and capability selection establishes the rollout's scope before configuration. These are selected moments from the flow, not every setup screen.</figcaption>
         </figure>
         <h3 class="design-step">2. Check readiness and configure behavior</h3>
         <p class="cs-body-text">For case follow-up and closure, the flow surfaces prerequisite status and rule selection together. It keeps rule selection in context and links to rule editing rather than embedding another full editor. I worked with engineering to align the experience with existing systems.</p>
@@ -280,7 +289,7 @@
           <a href="assets/agenthub-adopt-rules.png" target="_blank" rel="noopener noreferrer" aria-label="Open the prerequisite and rule configuration screen at full size in a new tab">
             <img src="assets/agenthub-adopt-rules.png" width="1186" height="742" alt="Case Processing Agent configuration showing completed prerequisites, case follow-up and closure rules, an Add or edit rules link, and progress toward review and publish." loading="lazy" decoding="async" />
           </a>
-          <figcaption>Readiness and rule configuration appear within the selected capability's setup, before the final review stage. <a href="assets/agenthub-adopt-rules.png" target="_blank" rel="noopener noreferrer">View full size ↗</a></figcaption>
+          <figcaption>Readiness and rule configuration appear within the selected capability's setup, before the final review stage.</figcaption>
         </figure>
       </section>
       </div>
@@ -354,7 +363,7 @@
         <p class="reflection-text">This project reinforced the value of involving engineering early and making scope decisions explicit. My focus was not just organizing information, but connecting what admins need to understand with the decisions they need to make.</p>
       </section>
 
-    </main>
+    </div>
   </div>
 
   <!-- NEXT PROJECT -->
@@ -384,14 +393,16 @@
     </a>
   </div>
 
+  </main>
+
   <footer>
     <div class="footer-left">Olga<br><em>Caterenciuc.</em></div>
     <div class="footer-right">
       <div class="footer-cta">
-        <a href="mailto:hello@olgacaterenciuc.co" class="btn-primary">Let's chat</a>
+        <a href="mailto:olgacaterenciucwork@gmail.com" class="btn-primary">Let's chat</a>
         <a href="https://www.linkedin.com/in/olga-caterenciuc-95aa991a5/" target="_blank" rel="noopener noreferrer" class="btn-ghost">LinkedIn ↗</a>
       </div>
-      <p class="footer-copy">Product Designer · Microsoft · 2025</p>
+      <p class="footer-copy">Product Designer · Microsoft · 2026</p>
     </div>
   </footer>
 

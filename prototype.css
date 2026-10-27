@@ -1,3 +1,8 @@
+:root {
+  --warm-mid: #706559;
+  --accent-strong: #AD432E;
+}
+
 nav {
   gap: 16px;
   background: var(--ivory);
@@ -11,6 +16,29 @@ nav {
 a:focus-visible {
   outline: 2px solid var(--accent);
   outline-offset: 6px;
+}
+
+.nav-links a,
+.nav-back {
+  opacity: .7;
+}
+
+.btn-primary:hover,
+.annotation-pin {
+  background: var(--accent-strong);
+}
+
+.cs-toc-list a:hover,
+.impact-text strong {
+  color: var(--accent-strong);
+}
+
+.pillar-card.active .pillar-number,
+.impact-item.highlight .impact-bullet,
+.reflection-label,
+.case-card:hover .case-card-index,
+.next-card:hover .next-card-sub {
+  color: rgba(245,240,232,.65);
 }
 
 .nav-links a,
@@ -36,9 +64,12 @@ a:focus-visible {
   text-transform: uppercase;
 }
 
-.case-card:hover .case-card-link,
 .case-card:focus-visible .case-card-link {
-  color: var(--accent);
+  color: var(--accent-strong);
+}
+
+.case-card:hover .case-card-link {
+  color: var(--accent-light);
 }
 
 @media (max-width: 1024px) {
