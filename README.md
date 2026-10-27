@@ -113,7 +113,7 @@ and details in the image are fictional presentation data, so they are retained
 without redaction and labeled as fictional in the page caption. Product interface
 branding remains visible. The original attachment was not modified.
 A soft CSS shadow and rounded corners add elevation without an image border.
-The image is the original 1479 × 768 PNG, preserved byte-for-byte,
+The image is the latest supplied 1478 × 768 PNG, preserved byte-for-byte,
 without resampling or artificial upscaling. The full-size link uses the same PNG.
 Only a selected demo screen is shown; the full prototype is withheld for
 confidentiality, as explained in the page's introductory note.
