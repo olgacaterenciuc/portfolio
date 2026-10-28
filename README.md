@@ -63,8 +63,10 @@ The [SVG logo](./assets/oc-logo.svg) uses outlined Cormorant Garamond Light Ital
 for both initials, matching the homepage's italic typeface and weight. An ink O
 and terracotta C sit on ivory. The outlines have no external font dependencies.
 A [512 × 512 PNG](./assets/oc-logo.png) includes transparent corners.
-All three pages reference [favicon.ico](./favicon.ico), generated from this logo
-at 16, 32, and 48 pixels. The navigation treatment is unchanged.
+All three pages use the SVG logo as a scalable favicon, with
+[favicon.ico](./favicon.ico) as a 16, 32, and 48 pixel fallback. Both icon URLs
+include a version parameter to avoid reusing the domain's old cached icon.
+The navigation treatment is unchanged.
 
 ### Agent Hub
 
