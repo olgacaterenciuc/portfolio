@@ -57,6 +57,15 @@ Fonts load from Google Fonts and require an internet connection. Case-study
 screenshots are stored locally in [assets](./assets).
 Contact destinations are confirmed by the portfolio owner.
 
+### OC monogram
+
+The [SVG logo](./assets/oc-logo.svg) uses outlined Cormorant Garamond Light Italic
+for both initials, matching the homepage's italic typeface and weight. An ink O
+and terracotta C sit on ivory. The outlines have no external font dependencies.
+A [512 × 512 PNG](./assets/oc-logo.png) includes transparent corners.
+All three pages reference [favicon.ico](./favicon.ico), generated from this logo
+at 16, 32, and 48 pixels. The navigation treatment is unchanged.
+
 ### Agent Hub
 
 The three supplied prototype exports replace the original external-image gallery:
